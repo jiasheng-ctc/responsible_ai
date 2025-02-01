@@ -1,7 +1,6 @@
 import sys
 import os
 
-# Ensure the application can find the guardrails module
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 import dash
@@ -9,7 +8,6 @@ from dash import dcc, html, Input, Output, State
 import dash_bootstrap_components as dbc
 from guardrails_utils.guardrails_validation import validate_sensitive_profanity_and_pii, validate_sql, is_sql_statement
 
-# Dash App setup
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 app.title = 'Guardrail Chatbot Demo'
 
@@ -48,7 +46,6 @@ def validate_input(n_clicks, user_input):
     if not user_input:
         return "⚠️ Please enter a message.", "alert alert-warning", []
 
-    # Show loading spinner
     loading_spinner = dbc.Spinner(size="sm", color="primary")
 
     if is_sql_statement(user_input):
