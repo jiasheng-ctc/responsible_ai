@@ -25,6 +25,4 @@ This project is a chatbot built with Dash and Guardrails AI, ensuring input vali
 ## Configuration
 Edit the `.env` file to set API keys and environment settings.
 
-## License
-MIT License
 
