@@ -2,10 +2,20 @@ import os
 import logging
 from guardrails import Guard, OnFailAction
 from guardrails.hub import SensitiveTopic, ExcludeSqlPredicates, ProfanityFree, DetectPII
-from config.config import Config
+from app.config.config import Config
+import litellm
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+def query_tinyllama(prompt: str, metadata=None):  
+    response = litellm.completion(
+        model="ollama/tinyllama",
+        api_base=Config.MODEL_HOST,
+        messages=[{"role": "user", "content": prompt}],
+        max_tokens=500
+    )
+    return response.get("choices", [{}])[0].get("message", {}).get("content", "")
 
 sensitive_and_profanity_guard = Guard().use_many(
     ProfanityFree(on_fail=OnFailAction.EXCEPTION),
@@ -13,6 +23,7 @@ sensitive_and_profanity_guard = Guard().use_many(
         sensitive_topics=Config.SENSITIVE_TOPICS,
         disable_classifier=Config.DISABLE_CLASSIFIER,
         disable_llm=Config.DISABLE_LLM,
+        llm_callable=query_tinyllama,
         on_fail=OnFailAction.EXCEPTION
     )
 )
@@ -48,5 +59,3 @@ def validate_sql(text):
         return "Valid SQL input."
     except Exception as e:
         return f"SQL Validation failed: {e}"
-
-
