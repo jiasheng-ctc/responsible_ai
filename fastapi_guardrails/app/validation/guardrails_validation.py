@@ -8,14 +8,15 @@ import litellm
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-def query_tinyllama(prompt: str, metadata=None):  
+def query_vllm(prompt: str, metadata=None):  
     response = litellm.completion(
-        model="ollama/tinyllama",
+        model="vllm/meta-llama/Llama-3.1",
         api_base=Config.MODEL_HOST,
         messages=[{"role": "user", "content": prompt}],
         max_tokens=500
     )
     return response.get("choices", [{}])[0].get("message", {}).get("content", "")
+
 
 sensitive_and_profanity_guard = Guard().use_many(
     ProfanityFree(on_fail=OnFailAction.EXCEPTION),
@@ -23,7 +24,7 @@ sensitive_and_profanity_guard = Guard().use_many(
         sensitive_topics=Config.SENSITIVE_TOPICS,
         disable_classifier=Config.DISABLE_CLASSIFIER,
         disable_llm=Config.DISABLE_LLM,
-        llm_callable=query_tinyllama,
+        llm_callable=query_vllm,
         on_fail=OnFailAction.EXCEPTION
     )
 )

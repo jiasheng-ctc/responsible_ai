@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from app.validation.guardrails_validation import query_tinyllama, validate_sensitive_profanity_and_pii, validate_sql, is_sql_statement
+from app.validation.guardrails_validation import query_vllm, validate_sensitive_profanity_and_pii, validate_sql, is_sql_statement
 
 app = FastAPI()
 
@@ -20,9 +20,9 @@ def validate_input(data: InputText):
     if "failed" in validation_result:
         raise HTTPException(status_code=400, detail=validation_result)
 
-    tinyllama_response = query_tinyllama(text)
+    vllm_response = query_vllm(text)
     
-    return {"message": "Validation successful.", "validated_text": tinyllama_response}
+    return {"message": "Validation successful.", "validated_text": vllm_response}
 
 if __name__ == "__main__":
     import uvicorn

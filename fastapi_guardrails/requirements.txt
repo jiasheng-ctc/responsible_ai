@@ -1,0 +1,32 @@
+# Core Web Framework
+fastapi==0.115.8
+starlette==0.45.3
+uvicorn==0.34.0
+
+# Model Serving & AI Libraries
+litellm==1.59.10
+vllm==0.7.1
+torch==2.5.1
+transformers==4.48.2
+
+# Guardrails AI & Validation
+guardrails-ai==0.6.2
+guardrails-grhub-sensitive-topics==0.0.2
+guardrails-grhub-exclude-sql-predicates==0.0.0
+guardrails-grhub-profanity-free==0.0.0
+alt-profanity-check==1.6.1
+presidio_analyzer==2.2.357
+presidio_anonymizer==2.2.357
+
+# Supporting Dependencies
+pydantic==2.10.6
+httpx==0.27.2
+aiohttp==3.11.11
+requests==2.32.3
+numpy==1.26.4
+scipy==1.15.1
+tqdm==4.67.1
+typer==0.12.5
+protobuf==5.29.3
+sentencepiece==0.2.0
+orjson==3.10.15
