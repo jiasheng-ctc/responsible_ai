@@ -1,6 +1,0 @@
-dash
-fastapi
-uvicorn
-python-dotenv
-guardrails-ai
-dash_bootstrap_components
